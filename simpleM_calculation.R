@@ -7,7 +7,7 @@
 # You will need:
 # genotype data in numeric (0,1,2) format, where the number at each locus represents the number of copies of the reference allele for that taxon at that locus.
 # Genotype file should be formatted with taxa names in column names and SNP names in the row names.
-# The name of each chromosome should be in a row labelled "chrom".
+# The name of each chromosome should be in a column labelled "chrom".
 
 # Load packages:
 # NOTE: this assumes that you have the tidyverse and data.table packages installed.
