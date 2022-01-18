@@ -68,11 +68,12 @@ class(a2) <- "numeric"
 t.genotype=t(a2) # transpose
 
 # use the simpleM function on my data, one chromosome at a time:
+n=1 # make iterator
 Meff.list <- vector("list", length=0)
-for(i in seq_along(unique(a$chrom))) { # loop through each chromosome present in the genotype data
+for(i in unique(a$chrom)) { # loop through each chromosome present in the genotype data
   
   # pull genotype for chromosome:
-  genotype <- t.genotype[,a$chrom==(unique(a$chrom))[i]]
+  genotype <- t.genotype[,a$chrom==i]
   
   # SimpleM requires me to remove monomorphic SNPs:
   num.SNPs <- vector(length = ncol(genotype))
@@ -89,9 +90,10 @@ for(i in seq_along(unique(a$chrom))) { # loop through each chromosome present in
   M_eff_G <- Meff.simpleM(genotype=genotype, cor_r = cor_G, 
                           eigen_path=paste0("simpleM.eigenvalues.chr", i,".csv"), pca_cutoff_perc = pca_cutoff_perc)
   # save results from this chromosome
-  Meff.list[[i]] <- M_eff_G
+  Meff.list[[n]] <- M_eff_G
   print(paste("finshed with chromosome", i, "Meff_G is", M_eff_G))
   rm(M_eff_G)
+  n=n+1 # increase iterator
   
 }
 
@@ -114,11 +116,12 @@ a=fread("genotype_file.csv")
 
 Meff.list <- vector("list", length=0)
 eigen.list <- vector("list", length=0)
-for(i in seq_along(unique(a$chrom))) { 
+n=1
+for(i in unique(a$chrom)) { 
   
   # read in previous results
   eigen_path <- paste0("simpleM.eigenvalues.chr", i,".csv")
-  eigen.list[[i]] <- fread(eigen_path)
+  eigen.list[[n]] <- fread(eigen_path)
   
   # calculate simpleM's MeffG:
   eigen_values <- sort(eigen.list[[i]]$value, decreasing = TRUE)
@@ -135,6 +138,7 @@ for(i in seq_along(unique(a$chrom))) {
   Meff.list[[i]] <- M_eff_G
   print(paste("finshed with chromosome", i, "Meff_G is", M_eff_G))
   rm(M_eff_G)
+  n=n+1
 }
 fwrite(Meff.list, paste0("simpleM.MeffG.cutoff", pca_cutoff_perc, ".csv")) # output M_eff_G for each chromosome
 
