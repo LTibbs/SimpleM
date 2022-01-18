@@ -82,7 +82,7 @@ for(i in unique(a$chrom)) { # loop through each chromosome present in the genoty
   genotype <- genotype[,num.SNPs>1]
   
   # use modified version of COMBAT's ld.Rsquare function:
-  cor_G <- cor(as.matrix(genotype)) # need SNPs in row names, samples in column names for correlation
+  cor_G <- cor(as.matrix(genotype))
   stopifnot(ncol(cor_G)==ncol(genotype))
   
   # run simpleM function
