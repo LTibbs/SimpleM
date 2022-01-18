@@ -69,10 +69,10 @@ t.genotype=t(a2) # transpose
 
 # use the simpleM function on my data, one chromosome at a time:
 Meff.list <- vector("list", length=0)
-for(i in unique(a$chrom)) { # loop through each chromosome present in the genotype data
+for(i in seq_along(unique(a$chrom))) { # loop through each chromosome present in the genotype data
   
   # pull genotype for chromosome:
-  genotype <- t.genotype[,a$chrom==i]
+  genotype <- t.genotype[,a$chrom==(unique(a$chrom))[i]]
   
   # SimpleM requires me to remove monomorphic SNPs:
   num.SNPs <- vector(length = ncol(genotype))
@@ -114,7 +114,7 @@ a=fread("genotype_file.csv")
 
 Meff.list <- vector("list", length=0)
 eigen.list <- vector("list", length=0)
-for(i in unique(a$chrom)) { 
+for(i in seq_along(unique(a$chrom))) { 
   
   # read in previous results
   eigen_path <- paste0("simpleM.eigenvalues.chr", i,".csv")
