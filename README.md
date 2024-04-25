@@ -2,7 +2,7 @@
 Calculate SimpleM threshold for GWAS significance as described in https://doi.org/10.1002/gepi.20430 and recommended in https://doi.org/10.1002/tpg2.20077.
 
 # You will need:
-Genotype data in numeric (0,1,2) format, where the number at each locus represents the number of copies of the reference allele for that taxon at that locus. The genotype file should be formatted with taxa names in column names and SNP names in the row names, and the name of each chromosome should be in a column labelled "chrom".
+See notes at beginning of each script for required input files. 
 
-# Note for large data
-Large matrices slow down SimpleM substantially. To increase computational efficiency, split each chromosome into smaller pieces and run SimpleM on each. Then, sum Meff across all pieces. See `simpleM_efficient.R` for an example using 10,000 markers at a time.
+# Which script to use?
+For relatively small data (~10,000 markers), `simpleM_calculation.R` can easily run the whole genome at once. However, large matrices slow down SimpleM substantially. Therefore, to increase computational efficiency, I added `simpleM_efficient.R` as an option to run each chromosome separately, in chunks, as well as including other edits to improve efficiency over the base `simpleM_calculation.R`. 
